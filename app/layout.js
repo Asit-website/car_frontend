@@ -1,4 +1,5 @@
 
+import { Toaster } from "react-hot-toast"
 import "/public/assets/css/magnific-popup.min.css"
 import "/public/assets/css/style.css"
 
@@ -30,8 +31,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
+        <>
+          {/* <Toaster /> */}
         <html lang="en">
             <body className={`body counter-scroll ${dm.variable} ${jakarta.variable}`}>{children}</body>
         </html>
+        </>
     )
 }

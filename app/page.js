@@ -13,6 +13,7 @@ import Slide from "@/components/sections/Slide"
 import SlideSearchCar from "@/components/sections/SlideSearchCar"
 import TabCarService from "@/components/sections/TabCarService"
 import TestimonialCar from "@/components/sections/TestimonialCar"
+import { Toaster } from "react-hot-toast"
 export default function Home() {
 
     return (
@@ -33,6 +34,7 @@ export default function Home() {
                 <FeaturesCar />
                 <CarBannerV1 />
                 <CarBlogV1 />
+            <Toaster />
             </Layout>
         </>
     )

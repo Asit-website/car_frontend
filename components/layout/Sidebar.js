@@ -1,7 +1,19 @@
+"use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useState } from 'react';
+
 export default function Sidebar() {
     const pathname = usePathname() 
+
+    const [user , setUser] = useState(null);
+
+    useEffect(() => {
+        const car_user = JSON.parse(localStorage.getItem("Car_user"));
+        setUser(car_user);
+      
+    }, []);
+
     return (
         <>
             <div className="sidebar-dashboard">
@@ -10,8 +22,8 @@ export default function Sidebar() {
                 </div>
                 <div className="db-profile">
                     <img src="./assets/images/avatar/avt-blog.jpg" alt />
-                    <div className="name">Mehedii Mohammad</div>
-                    <p className="seller">Private Seller</p>
+                    <div className="name">{user?.FullName}</div>
+                    <p className="seller">{user?.AccountType}</p>
                 </div>
                 <div className="db-menu">
                     <ul>

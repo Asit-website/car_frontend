@@ -1,4 +1,3 @@
-
 'use client'
 import { useEffect, useState } from "react"
 import BackToTop from '../elements/BackToTop'
@@ -13,14 +12,21 @@ import Footer2 from './footer/Footer2'
 import Header1 from "./header/Header1"
 import Header2 from './header/Header2'
 import Header3 from "./header/Header3"
+
+
 export default function Layout({ headerStyle, footerStyle, headTitle, breadcrumbTitle, children }) {
-    const [scroll, setScroll] = useState(0)
+
+    const [scroll, setScroll] = useState(0);
+    const [user , setUser] = useState(null);
+
     // Moblile Menu
     const [isMobileMenu, setMobileMenu] = useState(false)
+
     const handleMobileMenu = () => {
         setMobileMenu(!isMobileMenu)
         !isMobileMenu ? document.body.classList.add("mobile-menu-visible") : document.body.classList.remove("mobile-menu-visible")
     }
+
     // Toggle 
     const [isToggled1, setToggled1] = useState(false)
     const handleToggle1 = () => setToggled1(!isToggled1)
@@ -44,6 +50,13 @@ export default function Layout({ headerStyle, footerStyle, headTitle, breadcrumb
             }
         })
     }, [])
+
+    useEffect(() => {
+        const car_user = JSON.parse(localStorage.getItem("Car_user"));
+        setUser(car_user);
+      
+    }, []);
+
     return (
         <>
             <HoverListing />
@@ -55,7 +68,7 @@ export default function Layout({ headerStyle, footerStyle, headTitle, breadcrumb
                     {!headerStyle && <Header1 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} />}
                     {headerStyle == 1 ? <Header1 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} /> : null}
                     {headerStyle == 2 ? <Header2 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} /> : null}
-                    {headerStyle == 3 ? <Header3 scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} /> : null}
+                    {headerStyle == 3 ? <Header3 user={user} setUser={setUser} scroll={scroll} isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} /> : null}
 
 
                         {breadcrumbTitle && <Breadcrumb breadcrumbTitle={breadcrumbTitle} />}
@@ -69,8 +82,8 @@ export default function Layout({ headerStyle, footerStyle, headTitle, breadcrumb
                 </div>
             </div>
             <BackToTop />
-            <ModalToggle handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} />
-            <ModalToggle2  handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} />
+            <ModalToggle handleToggle1={handleToggle1} setUser={setUser} user={user} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} />
+            <ModalToggle2  setUser={setUser} user={user} handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} />
             <ModalToggle3  handleToggle1={handleToggle1} isToggled1={isToggled1} handleToggle2={handleToggle2} isToggled2={isToggled2} handleToggle3={handleToggle3} isToggled3={isToggled3} />
         </>
     )

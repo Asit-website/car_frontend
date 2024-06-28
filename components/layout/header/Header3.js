@@ -1,10 +1,24 @@
+"use client"
 import Link from "next/link"
 import MobileMenu from "../MobileMenu"
-export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handleToggle1, isToggled1, handleToggle2, isToggled2, handleToggle3, isToggled3 }) {
+
+export default function Header3({  handleMobileMenu, handleToggle1, handleToggle2 , user , setUser }) {
+
+
+    const logoutHandler = (e)=>{
+        localStorage.removeItem("Car_user");
+        localStorage.removeItem("Car_token");
+        setUser(null);
+
+    }
+
     return (
+
         <>
             <header id="header3" className="main-header header header-fixed ">
+                
                 {/* Header Lower */}
+
                 <div className="top-bar">
                     <div className="themesflat-container">
                         <div className="row">
@@ -43,6 +57,7 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                         </div>
                     </div>
                 </div>
+
                 <div className="header-lower">
                     <div className="themesflat-container">
                         <div className="row">
@@ -102,12 +117,25 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                                         {/* Main Menu End*/}
                                     </div>
                                     <div className="header-account flex align-center">
+
+{
+     user  ?
+     <div className="register ml--18">
+     <div className="flex align-center">
+         <a data-bs-toggle="modal" onClick={logoutHandler} role="button">Logout</a>
+     </div>
+ </div>
+:
+
                                         <div className="register ml--18">
                                             <div className="flex align-center">
                                                 <a data-bs-toggle="modal" onClick={handleToggle1} role="button">Register</a>
                                                 <a data-bs-toggle="modal" onClick={handleToggle2} role="button">Login</a>
                                             </div>
                                         </div>
+
+}
+
                                         <div className="flat-bt-top sc-btn-top ml--20 ">
                                             <Link className="btn-icon-list" href="/car-list">
                                                 <span>Listing Yours</span>
@@ -123,9 +151,9 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                         </div>
                     </div>
                 </div>
-                {/* End Header Lower */}
-                {/* Mobile Menu  */}
+                
                 <div className="close-btn" onClick={handleMobileMenu}><span className="icon flaticon-cancel-1" /></div>
+
                 <div className="mobile-menu">
                     <div className="menu-backdrop" onClick={handleMobileMenu} />
                     <nav className="menu-box">
@@ -151,9 +179,11 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                         </div>
                     </nav>
                 </div>
+
                 {/* End Mobile Menu */}
             </header>
 
         </>
+
     )
 }

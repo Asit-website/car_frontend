@@ -1,3 +1,4 @@
+"use client"
 import CounterUp from '@/components/elements/CounterUp'
 import LayoutAdmin from "@/components/layout/LayoutAdmin"
 import dynamic from 'next/dynamic'
@@ -5,6 +6,8 @@ const Chart1 = dynamic(() => import('@/components/chart/Chart1'), {
     ssr: false,
 })
 export default function Dashboard() {
+
+
 
     return (
         <>

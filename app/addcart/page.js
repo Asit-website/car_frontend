@@ -1,7 +1,73 @@
 
+"use client"
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import axios from 'axios';
+import toast from "react-hot-toast";
+
+const baseUrl = "http://localhost:4000";
+
+
 export default function AddCart() {
+
+    const [user , setUser] = useState(null);
+
+
+    const [carDetail , setCarDetail] = useState({
+        ListingTitle:"", Model:"",  Type:"" , Years:"", Condition:"" ,StockNumber:"" , VINNumber:"" , Mileage:"" , Transmission:"" , DriverType:"", EngineSize:"" , Cylinders:"" ,FuelType:"" ,Doors:"" ,Color:"" , Seats:"" , CityMPG:"" , HighwayMPG:"" , Description:"" , RequestPriceLabel:""  ,RegularPrice:"" , SalePrice :""
+    })
+
+    const changeHandler = (e)=>{
+        const {name , value} =e.target;
+         setCarDetail((prev)=>({
+            ...prev ,
+            [name]:value
+         }))
+    }
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+
+        console.log("fSfsd");
+        
+        try {
+            const response = await axios.post(`${baseUrl}/seller/listCar/${user?._id}`, carDetail );
+        
+        
+            const data = await response?.data;
+             if(data?.status){
+                alert('Successfuly Register');
+
+                setCarDetail({
+                     ListingTitle:"", Model:"",  Type:"" , Years:"", Condition:"" ,StockNumber:"" , VINNumber:"" , Mileage:"" , Transmission:"" , DriverType:"", EngineSize:"" , Cylinders:"" ,FuelType:"" ,Doors:"" ,Color:"" , Seats:"" , CityMPG:"" , HighwayMPG:"" , Description:"" , RequestPriceLabel:""  ,RegularPrice:"" , SalePrice :""
+                })
+              
+             }
+             else {
+                alert(data?.message)
+             }
+    
+        
+          } catch (error) {
+            console.log('error ',error);
+            if (error.response) {
+                           toast.error(error?.response?.data?.message);
+              } else if (error.request) {
+              
+                toast.error('Request error: No response received');
+              } else {
+             
+                toast.error("Intenal server error ");
+              }
+          }
+      };
+
+      useEffect(() => {
+        const car_user = JSON.parse(localStorage.getItem("Car_user"));
+        setUser(car_user);
+      
+    }, []);
 
     return (
         <>
@@ -17,11 +83,13 @@ export default function AddCart() {
                             </div>
                         </div>
                     </div>
+
                     {/* video */}
+
                     <div className="tf-widget-add-cart">
                         <div className="themesflat-container">
                             <div className="tf-add-cart">
-                                <form action="/" id="submit-add-cart" className="form-add-cart needs-validation" noValidate>
+                                <form onSubmit={submitHandler} id="submit-add-cart" className="form-add-cart needs-validation" noValidate>
                                     <fieldset id="information" className="mb-60">
                                         <div className="inner-title mb-30">
                                             <span className="sub-title">Add Your Car Today</span>
@@ -30,7 +98,7 @@ export default function AddCart() {
                                         <div className="tfad-listing-title mb-30">
                                             <div className="form-group">
                                                 <label>Listing Title (*)</label>
-                                                <input type="text" id="listing-title" className="form-control" name="listing-title" placeholder="Enter title here" />
+                                                <input type="text" id="listing-title" onChange={changeHandler} className="form-control" value={carDetail.ListingTitle} name="ListingTitle" placeholder="Enter title here" />
                                             </div>
                                         </div>
                                         <div className="listing-fields-grid mb-30">
@@ -38,7 +106,7 @@ export default function AddCart() {
                                                 <label>Listing Title (*)</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select className="nice-select" name="ListingTitle" onChange={changeHandler} value={carDetail?.ListingTitle}>
                                                         <option data-value className="option selected">BMV</option>
                                                         <option data-value="Audi" className="option">Audi</option>
                                                         <option data-value="Bentley" className="option">Bentley</option>
@@ -57,7 +125,7 @@ export default function AddCart() {
                                                 <label> Model (*)</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select className="nice-select" value={carDetail.Model} onChange={changeHandler} name="Model">
                                                         <option data-value className="option selected">X5</option>
                                                         <option data-value="3 Series" className="option">3 Series</option>
                                                         <option data-value="718 Boxster T" className="option">718 Boxster T</option>
@@ -76,7 +144,7 @@ export default function AddCart() {
                                                 <label>Type (*)</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select name="Type" onChange={changeHandler} value={carDetail?.Type} className="nice-select">
                                                         <option data-value className="option selected">Crossover</option>
                                                         <option data-value="Crossover" className="option">Compact</option>
                                                         <option data-value="Convertible" className="option">Convertible</option>
@@ -90,14 +158,14 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label>Years (*)</label>
                                                 <div className="group-select">
-                                                    <input type="tel" id="year" defaultValue={2022} required />
+                                                    <input name="Years" onChange={changeHandler} value={carDetail?.Years} type="tel" id="year" defaultValue={2022} required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>Condition</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select name="Condition" onChange={changeHandler} value={carDetail?.Condition} className="nice-select">
                                                         <option data-value className="option selected">Used</option>
                                                         <option data-value="New" className="option">New</option>
                                                     </select>
@@ -106,19 +174,19 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label>Stock Number</label>
                                                 <div className="group-select">
-                                                    <input type="tel" id="stock-number" placeholder="Enter Number" required />
+                                                    <input name="StockNumber" onChange={changeHandler} value={carDetail?.StockNumber}  type="tel" id="stock-number" placeholder="Enter Number" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>VIN Number</label>
                                                 <div className="group-select">
-                                                    <input type="tel" id="vin-number" placeholder="Enter VIN" required />
+                                                    <input name="VINNumber" onChange={changeHandler} value={carDetail?.VINNumber}   type="tel" id="vin-number" placeholder="Enter VIN" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>Mileage</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="mileage" placeholder="Enter Mileage" required />
+                                                    <input  name="Mileage" onChange={changeHandler} value={carDetail?.Mileage}  type="number" id="mileage" placeholder="Enter Mileage" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
@@ -126,7 +194,7 @@ export default function AddCart() {
                                                 <div className="group-select">
 
 
-                                                    <select className="nice-select">
+                                                    <select name="Transmission" onChange={changeHandler} value={carDetail?.Transmission}   className="nice-select">
                                                         <option data-value className="option selected">Manual Transmission</option>
                                                         <option data-value="Auto" className="option">Auto</option>
                                                         <option data-value="CVT" className="option">CVT</option>
@@ -139,7 +207,7 @@ export default function AddCart() {
                                                 <label>Driver Type</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select name="DriverType" onChange={changeHandler} value={carDetail?.DriverType}  className="nice-select">
                                                         <option data-value className="option selected">FWD</option>
                                                         <option data-value="2WD" className="option">2WD</option>
                                                         <option data-value="3WD" className="option">3WD</option>
@@ -151,14 +219,14 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label>Engine Size</label>
                                                 <div className="group-select">
-                                                    <input type="text" id="engine-size" placeholder="Enter Engine" required />
+                                                    <input name="EngineSize" onChange={changeHandler} value={carDetail?.EngineSize}   type="text" id="engine-size" placeholder="Enter Engine" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>Cylinders</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select name="Cylinders" onChange={changeHandler} value={carDetail?.Cylinders}  className="nice-select">
                                                         <option data-value className="option selected">1</option>
                                                         <option data-value={2} className="option">2</option>
                                                         <option data-value={3} className="option">3</option>
@@ -172,7 +240,7 @@ export default function AddCart() {
                                                 <label>Fuel Type</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select  name="FuelType" onChange={changeHandler} value={carDetail?.FuelType} className="nice-select">
                                                         <option data-value className="option selected">Petrol</option>
                                                         <option data-value="Diesel" className="option">Diesel</option>
                                                         <option data-value="Electric" className="option">Electric</option>
@@ -185,7 +253,7 @@ export default function AddCart() {
                                                 <label>Doors</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select  name="Doors" onChange={changeHandler} value={carDetail?.Doors}  className="nice-select">
                                                         <option data-value className="option selected">4</option>
                                                         <option data-value={2} className="option">2</option>
                                                     </select>
@@ -195,7 +263,7 @@ export default function AddCart() {
                                                 <label>Color</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select name="Color" onChange={changeHandler} value={carDetail?.Color}   className="nice-select">
                                                         <option data-value className="option selected">Black</option>
                                                         <option data-value="red" className="option">Red</option>
                                                         <option data-value="White" className="option">White</option>
@@ -208,7 +276,7 @@ export default function AddCart() {
                                                 <label>Seats</label>
                                                 <div className="group-select">
 
-                                                    <select className="nice-select">
+                                                    <select name="Seats" onChange={changeHandler} value={carDetail?.Seats}  className="nice-select">
                                                         <option data-value className="option selected">1</option>
                                                         <option data-value={2} className="option">2</option>
                                                         <option data-value={3} className="option">3</option>
@@ -220,13 +288,13 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label>City MPG</label>
                                                 <div className="group-select">
-                                                    <input type="text" id="city-mpg" placeholder={18} required />
+                                                    <input  name="CityMPG" onChange={changeHandler} value={carDetail?.CityMPG}   type="text" id="city-mpg" placeholder={18} required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>Highway MPG</label>
                                                 <div className="group-select">
-                                                    <input type="text" id="highway-mpg" placeholder={28} required />
+                                                    <input type="text" id="highway-mpg" name="HighwayMPG" onChange={changeHandler} value={carDetail?.HighwayMPG}    placeholder={28} required />
                                                 </div>
                                             </div>
                                         </div>
@@ -234,7 +302,7 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label>Description</label>
                                                 <div className="group-select">
-                                                    <textarea id="description" name="Description" defaultValue={"                                            "} />
+                                                    <textarea name="Description" onChange={changeHandler} value={carDetail?.Description} id="description"  defaultValue={"                                            "} />
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +311,7 @@ export default function AddCart() {
                                                 <label>Request Price Label</label>
                                                 <div className="group-select">
                                                     <div className="radio">
-                                                        <input id="first" type="radio" name="numbers" defaultValue="first" />
+                                                        <input name="RequestPriceLabel" onChange={changeHandler} value={carDetail?.RequestPriceLabel}  id="first" type="radio" defaultValue="first" />
                                                         <label htmlFor="first">Negotiable</label>
                                                     </div>
                                                 </div>
@@ -251,19 +319,19 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label> Regular Price *</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="regular-price" placeholder="Enter Sale Price" required />
+                                                    <input name="RegularPrice" onChange={changeHandler} value={carDetail?.RegularPrice} type="number" id="regular-price" placeholder="Enter Sale Price" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>Sale Price</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="sale-price" placeholder="Enter Sale Price" required />
+                                                    <input name="SalePrice" onChange={changeHandler} value={carDetail?.SalePrice}  type="number" id="sale-price" placeholder="Enter Sale Price" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label>Request Price Label</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="requesr-price" placeholder="Enter Sale Price" required />
+                                                    <input name="RegularPrice" onChange={changeHandler} value={carDetail?.RegularPrice}   type="number" id="requesr-price" placeholder="Enter Sale Price" required />
                                                 </div>
                                             </div>
                                         </div>
@@ -279,7 +347,7 @@ export default function AddCart() {
                                                     <label>Request Price Label</label>
                                                     <div className="group-select">
                                                         <div className="radio">
-                                                            <input id="front" type="checkbox" name="check" defaultValue="check" />
+                                                            <input  type="checkbox" name="check" defaultValue="check" />
                                                             <label htmlFor="front">A/C: Front</label>
                                                         </div>
                                                         <div className="radio">
@@ -526,13 +594,13 @@ export default function AddCart() {
                                         </div>
                                     </fieldset>
                                     <fieldset>
-                                        <button type="submit" className="button-save-listing">Add
-                                            Car</button>
+                                        <button type="submit" className="button-save-listing">Add Car</button>
                                     </fieldset>
                                 </form>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </Layout>
