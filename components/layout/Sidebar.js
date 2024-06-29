@@ -21,7 +21,7 @@ export default function Sidebar() {
                     <Link href="/"><img src="assets/images/logo/logo2.png" alt="Logo" /></Link>
                 </div>
                 <div className="db-profile">
-                    <img src="./assets/images/avatar/avt-blog.jpg" alt />
+                    <img loading="lazy" className="profilePic" src={user?.ProfilePic ? user?.ProfilePic : "./assets/images/avatar/avt-blog.jpg"} alt />
                     <div className="name">{user?.FullName}</div>
                     <p className="seller">{user?.AccountType}</p>
                 </div>
