@@ -1,13 +1,17 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export default function Menu() {
+export default function () {
     const pathname = usePathname()
 
     return (
         <>
             <ul className="navigation clearfix">
+
+                <li className="dropdown2">
+
                 <li className="">
+
                     <Link href="/">Home</Link>
                     {/* <ul>
                         <li className={pathname == "/" ? "current" : ""}>

@@ -73,7 +73,11 @@ export default function Header3({  handleMobileMenu, handleToggle1, handleToggle
                                             <div className="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                                 <ul className="navigation clearfix">
                                                     <li className="dropdown2 current">
+
+                                                        <Link href="/">Home</Link>
+
                                                         <Link href="/#">Home</Link>
+
                                                         {/* <ul>
                                                             <li className="current">
                                                                 <Link href="/">Home Page 01</Link>
