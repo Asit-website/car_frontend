@@ -74,7 +74,7 @@ export default function Header3({  handleMobileMenu, handleToggle1, handleToggle
                                                 <ul className="navigation clearfix">
                                                     <li className="dropdown2 current">
                                                         <Link href="/#">Home</Link>
-                                                        <ul>
+                                                        {/* <ul>
                                                             <li className="current">
                                                                 <Link href="/">Home Page 01</Link>
                                                             </li>
@@ -83,7 +83,7 @@ export default function Header3({  handleMobileMenu, handleToggle1, handleToggle
                                                             <li><Link href="/home04">Home Page 04</Link></li>
                                                             <li><Link href="/home05">Home Page 05</Link></li>
                                                             <li><Link href="/home06">Home Page 06</Link></li>
-                                                        </ul>
+                                                        </ul> */}
                                                     </li>
                                                     <li className="dropdown2">
                                                         <Link href="/#">Cars</Link>

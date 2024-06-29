@@ -24,7 +24,7 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                                 <ul className="navigation clearfix">
                                                     <li className="dropdown2">
                                                         <Link href="/#">Home</Link>
-                                                        <ul>
+                                                        {/* <ul>
                                                             <li>
                                                                 <Link href="/">Home Page 01</Link>
                                                             </li>
@@ -33,7 +33,7 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                                             <li><Link href="/home04">Home Page 04</Link></li>
                                                             <li><Link href="/home05">Home Page 05</Link></li>
                                                             <li><Link href="/home06">Home Page 06</Link></li>
-                                                        </ul>
+                                                        </ul> */}
                                                     </li>
                                                     <li className="dropdown2">
                                                         <Link href="/#">Cars</Link>
