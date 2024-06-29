@@ -7,7 +7,11 @@ export default function () {
     return (
         <>
             <ul className="navigation clearfix">
+
                 <li className="dropdown2">
+
+                <li className="">
+
                     <Link href="/">Home</Link>
                     {/* <ul>
                         <li className={pathname == "/" ? "current" : ""}>
