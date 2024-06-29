@@ -48,13 +48,13 @@ export default function Sidebar() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/#">
+                            <Link href="/my-profile">
                                 <div className="icon">
                                     <svg width={18} height={16} viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.0013 15.7917L7.79297 14.6917C3.5013 10.8 0.667969 8.23333 0.667969 5.08333C0.667969 2.51667 2.68464 0.5 5.2513 0.5C6.7013 0.5 8.09297 1.175 9.0013 2.24167C9.90964 1.175 11.3013 0.5 12.7513 0.5C15.318 0.5 17.3346 2.51667 17.3346 5.08333C17.3346 8.23333 14.5013 10.8 10.2096 14.7L9.0013 15.7917Z" fill="#D01818" />
                                     </svg>
                                 </div>
-                                <p>My Favorites</p>
+                                <p>My Profile</p>
                             </Link>
                         </li>
                         <li>

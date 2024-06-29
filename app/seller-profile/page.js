@@ -1,8 +1,15 @@
-
+"use client"
+import { useEffect, useState } from "react"
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 export default function Error() {
+    const [user , setUser] = useState(null);
 
+    useEffect(() => {
+        const car_user = JSON.parse(localStorage.getItem("Car_user"));
+        setUser(car_user);
+      
+    }, []);
     return (
         <>
 
@@ -16,8 +23,8 @@ export default function Error() {
                                         <div className="profile">
                                             <img src="./assets/images/avatar/avt-review.jpg" alt="" />
                                             <div className="information">
-                                                <p className="private-seller">Private seller</p>
-                                                <h2 className="title">Rosalina D. Willaim</h2>
+                                                <p className="private-seller">{user?.AccountType}</p>
+                                                <h2 className="title">{user?.FullName}</h2>
                                             </div>
                                         </div>
                                         <div className="dealer-author-content">

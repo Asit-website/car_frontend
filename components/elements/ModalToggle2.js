@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import toast from "react-hot-toast";
-
+import { useRouter } from 'next/navigation'
 
 export default function ModalToggle2({
   handleToggle1,
@@ -17,6 +17,8 @@ export default function ModalToggle2({
     Password: "",
   
   });
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
@@ -44,6 +46,7 @@ export default function ModalToggle2({
         localStorage.setItem("Car_token" , data?.token);
         localStorage.setItem('Car_user', JSON.stringify(data?.user));
         setUser(data?.user);
+        // router.push('/',{scroll:false});
       } else {
         toast.error(data?.message);
       }
@@ -121,7 +124,7 @@ export default function ModalToggle2({
                       </a>
                     </div>
 
-                    <button className="sc-button" name="submit" type="submit">
+                    <button onClick={() => router.push('/')} className="sc-button" name="submit" type="submit">
                       <span>Login</span>
                     </button>
 
