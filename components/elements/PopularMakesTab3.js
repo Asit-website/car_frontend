@@ -15,34 +15,55 @@ export default function PopularMakesTab3() {
 
     const [allCars, setAllCars] = useState([]);
 
-    const getAllCars = async () => {
+    const getCars = async (id, query, page, perPage) => {
+        const resp = await fetch(`${baseUrl}/seller/getAllCars?id=${id}&query=${query}&page=${page}&perPage=${perPage}`, {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'token': localStorage.getItem('Car_token')
+          }
+        });
+        const data = await resp.json();
+        return data;
+      };
 
-        try {
-            const response = await axios.get(`${baseUrl}/seller/getAllCars`);
+      const getData = async () => {
+        let ans = await getCars("", "", "", "");
+        setAllCars(ans.data);
+    }
 
-            const data = response.data;
-            console.log(data);
-            if (data?.status) {
-                setAllCars(data?.CarDetails);
-            } else {
-                toast.error(data?.message);
-            }
-        } catch (error) {
-            if (error.response) {
-                toast.error(error.response.data.message);
-            } else if (error.request) {
-                toast.error("Request error: No response received");
-            } else {
-                toast.error("Internal server error");
-            }
-        }
-    };
+    // const getAllCars = async () => {
+
+    //     try {
+    //         const response = await axios.get(`${baseUrl}/seller/getAllCars`);
+
+    //         const data = response.data;
+    //         console.log(data);
+    //         if (data?.status) {
+    //             setAllCars(data?.CarDetails);
+    //         } else {
+    //             toast.error(data?.message);
+    //         }
+    //     } catch (error) {
+    //         if (error.response) {
+    //             toast.error(error.response.data.message);
+    //         } else if (error.request) {
+    //             toast.error("Request error: No response received");
+    //         } else {
+    //             toast.error("Internal server error");
+    //         }
+    //     }
+    // };
 
 
 
+
+    // useEffect(() => {
+    //     getAllCars();
+    // })
 
     useEffect(() => {
-        getAllCars();
+        getData();
     })
     return (
         <>
@@ -71,7 +92,7 @@ export default function PopularMakesTab3() {
                         {
                             allCars?.map((val, index) => {
                                 return <div key={index} className="tf-car-service">
-                                    <Link href="/listing-details" className="image">
+                                    <Link href={`/listing/${val?._id}`} className="image">
                                         <div className="stm-badge-top">
                                             <div className="feature">
                                                 <span>Featured</span>
@@ -118,7 +139,7 @@ export default function PopularMakesTab3() {
                                     </Link>
                                     <div className="content">
                                         <span className="sub-title">{val?.ListingTitle}</span>
-                                        <h6 className="title"><Link href="/listing-details" /><Link href="/listing-details">{val?.Model}</Link></h6>
+                                        <h6 className="title"><Link href={`/listing/${val?._id}`} /><Link href={`/listing/${val?._id}`}>{val?.Model}</Link></h6>
                                         <span className="price">${val?.SalePrice}</span>
                                         <div className="description">
                                             <ul>
@@ -147,12 +168,10 @@ export default function PopularMakesTab3() {
                                         </div>
                                         <div className="bottom-btn-wrap">
                                             <div className="btn-read-more">
-                                                <a className="more-link" onClick={() =>
-                                                    router.push("/listing-details",{st:val})
-                                                }>
+                                                <Link href={`/listing/${val?._id}`} className="more-link" >
                                                     <span>View details</span>
                                                     <i className="icon-arrow-right2" />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="btn-group">
                                                 <a href="#" className="icon-service">
@@ -646,7 +665,7 @@ export default function PopularMakesTab3() {
                                     <>
                                         {
                                             val?.Condition === "New" ? <div key={index} className="tf-car-service">
-                                                <Link href="/listing-details" className="image">
+                                                <Link href={`/listing/${val?._id}`} className="image">
                                                     <div className="stm-badge-top">
                                                         <div className="feature">
                                                             <span>Featured</span>
@@ -693,7 +712,7 @@ export default function PopularMakesTab3() {
                                                 </Link>
                                                 <div className="content">
                                                     <span className="sub-title">Mini Cooper 3 Similar</span>
-                                                    <h6 className="title"><Link href="/listing-details">Chevrolet Suburban 2021 mo</Link></h6>
+                                                    <h6 className="title"><Link href={`/listing/${val?._id}`}>Chevrolet Suburban 2021 mo</Link></h6>
                                                     <span className="price">$27,000</span>
                                                     <div className="description">
                                                         <ul>
@@ -722,10 +741,10 @@ export default function PopularMakesTab3() {
                                                     </div>
                                                     <div className="bottom-btn-wrap">
                                                         <div className="btn-read-more">
-                                                            <a className="more-link" href="/listing-details">
+                                                            <Link className="more-link" href={`/listing/${val?._id}`}>
                                                                 <span>View details</span>
                                                                 <i className="icon-arrow-right2" />
-                                                            </a>
+                                                            </Link>
                                                         </div>
                                                         <div className="btn-group">
                                                             <a href="#" className="icon-service">
@@ -758,7 +777,7 @@ export default function PopularMakesTab3() {
                                     <>
                                         {
                                             val?.Condition === "Used" ? <div key={index} className="tf-car-service">
-                                                <Link href="/listing-details" className="image">
+                                                <Link href={`/listing/${val?._id}`} className="image">
                                                     <div className="stm-badge-top">
                                                         <div className="feature">
                                                             <span>Featured</span>
@@ -805,7 +824,7 @@ export default function PopularMakesTab3() {
                                                 </Link>
                                                 <div className="content">
                                                     <span className="sub-title">Mini Cooper 3 Similar</span>
-                                                    <h6 className="title"><Link href="/listing-details">Chevrolet Suburban 2021 mo</Link></h6>
+                                                    <h6 className="title"><Link href={`/listing/${val?._id}`}>Chevrolet Suburban 2021 mo</Link></h6>
                                                     <span className="price">$27,000</span>
                                                     <div className="description">
                                                         <ul>
@@ -834,10 +853,10 @@ export default function PopularMakesTab3() {
                                                     </div>
                                                     <div className="bottom-btn-wrap">
                                                         <div className="btn-read-more">
-                                                            <a className="more-link" href="/listing-details">
+                                                            <Link className="more-link" href={`/listing/${val?._id}`}>
                                                                 <span>View details</span>
                                                                 <i className="icon-arrow-right2" />
-                                                            </a>
+                                                            </Link>
                                                         </div>
                                                         <div className="btn-group">
                                                             <a href="#" className="icon-service">

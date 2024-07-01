@@ -5,8 +5,8 @@ import ModalTestDriver from "@/components/elements/ModalTestDriver"
 import Layout from "@/components/layout/Layout"
 import ThumbSlider from "@/components/slider/ThumbSlider"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useParams } from "next/navigation"
+import { useState,useEffect } from "react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 
@@ -37,15 +37,39 @@ const swiperOptions = {
     },
 }
 
-export default function ListingDetails({params}) {
+export default function ListingDetails({ params }) {
 
     const [isToggled4, setToggled4] = useState(false)
     const handleToggle4 = () => setToggled4(!isToggled4)
     const [isToggled5, setToggled5] = useState(false)
     const handleToggle5 = () => setToggled5(!isToggled5)
 
-    const location = usePathname();
-    const carDetails = location?.st;
+    const [data, setData] = useState({});
+
+    const { id } = useParams();
+
+      const baseUrl = "http://localhost:4000";
+
+    const getCars = async (id, query, page, perPage) => {
+        const resp = await fetch(`${baseUrl}/seller/getAllCars?id=${id}&query=${query}&page=${page}&perPage=${perPage}`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'token': localStorage.getItem('Car_token')
+            }
+        });
+        const data = await resp.json();
+        return data;
+    };
+
+    const getData = async () => {
+        let ans = await getCars(id, '', '', '');
+        setData(ans.data[0]);
+    };
+
+    useEffect(() => {
+        getData();
+    }, [id])
 
     return (
         <>
@@ -76,18 +100,18 @@ export default function ListingDetails({params}) {
                                                 </div>
                                                 <div className="info flex">
                                                     <span>Make:</span>
-                                                    <span className="fw-4">Toyota</span>
+                                                    <span className="fw-4">{data?.ListingTitle}</span>
                                                 </div>
                                                 <div className="info flex">
                                                     <span>Model:</span>
-                                                    <span className="fw-4">{carDetails?.Condition}</span>
+                                                    <span className="fw-4">{data?.Model}</span>
                                                 </div>
                                                 <div className="info flex">
-                                                    <span>Body:</span>
-                                                    <span className="fw-4">{carDetails?.FuelType}</span>
+                                                    <span>Type:</span>
+                                                    <span className="fw-4">{data?.Type}</span>
                                                 </div>
                                             </div>
-                                            <div className="title-heading">Chevrolet Suburban 2021</div>
+                                            <div className="title-heading">{data?.FuelType}</div>
                                             <div className="text-address">
                                                 <i className="icon-map-1-1" />
                                                 <p>Boston, MA, United States</p>
@@ -105,8 +129,8 @@ export default function ListingDetails({params}) {
                                                 </Link>
                                             </div>
                                             <div className="price-wrap flex">
-                                                <p className="price-sale">$46,000</p>
-                                                <p className="price">$48,000</p>
+                                                <p className="price-sale">${data?.SalePrice}</p>
+                                                <p className="price">${data?.RegularPrice}</p>
                                             </div>
                                         </div>
                                     </div>

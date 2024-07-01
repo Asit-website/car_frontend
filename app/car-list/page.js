@@ -26,28 +26,45 @@ export default function CarList() {
 
     const [allCars, setAllCars] = useState([]);
 
-    const getAllCars = async () => {
+    const getCars = async (id, query, page, perPage) => {
+        const resp = await fetch(`${baseUrl}/seller/getAllCars?id=${id}&query=${query}&page=${page}&perPage=${perPage}`, {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'token': localStorage.getItem('Car_token')
+          }
+        });
+        const data = await resp.json();
+        return data;
+      };
 
-        try {
-            const response = await axios.get(`${baseUrl}/seller/getAllCars`);
+      const getData = async () => {
+        let ans = await getCars("", "", "", "");
+        setAllCars(ans.data);
+    }
 
-            const data = response.data;
-            console.log("data" , data);
-            if (data?.status) {
-                setAllCars(data?.CarDetails);
-            } else {
-                toast.error(data?.message);
-            }
-        } catch (error) {
-            if (error.response) {
-                toast.error(error.response.data.message);
-            } else if (error.request) {
-                toast.error("Request error: No response received");
-            } else {
-                toast.error("Internal server error");
-            }
-        }
-    };
+    // const getAllCars = async () => {
+
+    //     try {
+    //         const response = await axios.get(`${baseUrl}/seller/getAllCars`);
+
+    //         const data = response.data;
+    //         console.log("data" , data);
+    //         if (data?.status) {
+    //             setAllCars(data?.CarDetails);
+    //         } else {
+    //             toast.error(data?.message);
+    //         }
+    //     } catch (error) {
+    //         if (error.response) {
+    //             toast.error(error.response.data.message);
+    //         } else if (error.request) {
+    //             toast.error("Request error: No response received");
+    //         } else {
+    //             toast.error("Internal server error");
+    //         }
+    //     }
+    // };
 
 
     useEffect(() => {
@@ -69,8 +86,12 @@ export default function CarList() {
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
+    // useEffect(() => {
+    //     getAllCars();
+    // },[])
+
     useEffect(() => {
-        getAllCars();
+        getData();
     },[])
 
 
@@ -388,13 +409,10 @@ export default function CarList() {
                                                                         <p className="price-sale">{car?.SalePrice}</p>
                                                                     </div>
                                                                     <div className="btn-read-more">
-                                                                        <a className="more-link" onClick={() =>
-                                                                            router.push("/listing-details", { st: car })
-                                                                              
-                                                                        }>
+                                                                        <Link href={`/listing/${car?._id}`} className="more-link" >
                                                                             <span >View details</span>
                                                                             <i className="icon-arrow-right2" />
-                                                                        </a>
+                                                                        </Link>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -519,12 +537,12 @@ export default function CarList() {
                                                                                     <p className="price-sale">{car?.SalePrice}</p>
                                                                                 </div>
                                                                                 <div className="btn-read-more">
-                                                                                    <a className="more-link" onClick={() =>
-                                                                                        router.push("/listing-details", { st: car })
-                                                                                    }>
+                                                                                    <Link 
+                                                                                    href={`/listing/${car?._id}`}
+                                                                                    className="more-link">
                                                                                         <span>View details</span>
                                                                                         <i className="icon-arrow-right2" />
-                                                                                    </a>
+                                                                                    </Link>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -656,12 +674,12 @@ export default function CarList() {
                                                                                     <p className="price-sale">{car?.SalePrice}</p>
                                                                                 </div>
                                                                                 <div className="btn-read-more">
-                                                                                    <a className="more-link" onClick={() =>
-                                                                                        router.push("/listing-details", { st: car })
-                                                                                    }>
+                                                                                <Link 
+                                                                                    href={`/listing/${car?._id}`}
+                                                                                    className="more-link">
                                                                                         <span>View details</span>
                                                                                         <i className="icon-arrow-right2" />
-                                                                                    </a>
+                                                                                    </Link>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
