@@ -32,7 +32,7 @@ export default function CarList() {
             const response = await axios.get(`${baseUrl}/seller/getAllCars`);
 
             const data = response.data;
-            console.log(data);
+            console.log("data" , data);
             if (data?.status) {
                 setAllCars(data?.CarDetails);
             } else {
@@ -71,10 +71,8 @@ export default function CarList() {
 
     useEffect(() => {
         getAllCars();
-    })
+    },[])
 
-
-    console.log("allcars ", allCars);
 
     return (
         <>
@@ -245,6 +243,7 @@ export default function CarList() {
                                 </div>
 
                                 <div className="col-md-12 col-lg-9 listing-list-car-wrap">
+
                                     <form action="/" className="tf-my-listing-search">
                                         <div className="row">
                                             <div className="col-md-6">
@@ -391,8 +390,9 @@ export default function CarList() {
                                                                     <div className="btn-read-more">
                                                                         <a className="more-link" onClick={() =>
                                                                             router.push("/listing-details", { st: car })
+                                                                              
                                                                         }>
-                                                                            <span>View details</span>
+                                                                            <span >View details</span>
                                                                             <i className="icon-arrow-right2" />
                                                                         </a>
                                                                     </div>
@@ -694,6 +694,7 @@ export default function CarList() {
                                     </div>
 
                                 </div>
+
                             </div>
                         </div>
                     </div>

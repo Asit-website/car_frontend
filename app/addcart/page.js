@@ -38,7 +38,9 @@ export default function AddCart() {
     photo3: "",
     photo4: "",
     photo5: "",
+    ListingFeatures: [],
   });
+
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -61,50 +63,51 @@ export default function AddCart() {
     e.preventDefault();
 
     try {
+      const formData = new FormData();
 
-            const formData = new FormData();
+      if (carDetail.photo1) {
+        formData.append("photo1", carDetail.photo1);
+      }
+      if (carDetail.photo2) {
+        formData.append("photo2", carDetail.photo2);
+      }
+      if (carDetail.photo3) {
+        formData.append("photo3", carDetail.photo3);
+      }
+      if (carDetail.photo4) {
+        formData.append("photo4", carDetail.photo4);
+      }
+      if (carDetail.photo5) {
+        formData.append("photo5", carDetail.photo5);
+      }
+      formData.append("ListingTitle", carDetail.ListingTitle);
+      formData.append("Model", carDetail.Model);
+      formData.append("Type", carDetail.Type);
+      formData.append("Years", carDetail.Years);
+      formData.append("Condition", carDetail.Condition);
+      formData.append("StockNumber", carDetail.StockNumber);
+      formData.append("VINNumber", carDetail.VINNumber);
+      formData.append("Mileage", carDetail.Mileage);
+      formData.append("Transmission", carDetail.Transmission);
+      formData.append("DriverType", carDetail.DriverType);
+      formData.append("EngineSize", carDetail.EngineSize);
+      formData.append("Cylinders", carDetail.Cylinders);
+      formData.append("FuelType", carDetail.FuelType);
+      formData.append("Doors", carDetail.Doors);
+      formData.append("Color", carDetail.Color);
+      formData.append("Seats", carDetail.Seats);
+      formData.append("CityMPG", carDetail.CityMPG);
+      formData.append("HighwayMPG", carDetail.HighwayMPG);
+      formData.append("Description", carDetail.Description);
+      formData.append("RequestPriceLabel", carDetail.RequestPriceLabel);
+      formData.append("RegularPrice", carDetail.RegularPrice);
+      formData.append("SalePrice", carDetail.SalePrice);
+      formData.append("ListingFeatures", carDetail.ListingFeatures);
 
-             if(carDetail.photo1){
-                 formData.append('photo1', carDetail.photo1);
-                }
-             if(carDetail.photo2){
-                 formData.append('photo2', carDetail.photo2);
-                }
-             if(carDetail.photo3){
-                 formData.append('photo3', carDetail.photo3);
-                }
-             if(carDetail.photo4){
-                 formData.append('photo4', carDetail.photo4);
-                }
-             if(carDetail.photo5){
-                 formData.append('photo5', carDetail.photo5);
-                }
-                formData.append('ListingTitle', carDetail.ListingTitle);
-                formData.append('Model', carDetail.Model);
-                formData.append('Type', carDetail.Type);
-                formData.append('Years', carDetail.Years);
-                formData.append('Condition', carDetail.Condition);
-                formData.append('StockNumber', carDetail.StockNumber);
-                formData.append('VINNumber', carDetail.VINNumber);
-                formData.append('Mileage', carDetail.Mileage);
-                formData.append('Transmission', carDetail.Transmission);
-                formData.append('DriverType', carDetail.DriverType);
-                formData.append('EngineSize', carDetail.EngineSize);
-                formData.append('Cylinders', carDetail.Cylinders);
-                formData.append('FuelType', carDetail.FuelType);
-                formData.append('Doors', carDetail.Doors);
-                formData.append('Color', carDetail.Color);
-                formData.append('Seats', carDetail.Seats);
-                formData.append('CityMPG', carDetail.CityMPG);
-                formData.append('HighwayMPG', carDetail.HighwayMPG);
-                formData.append('Description', carDetail.Description);
-                formData.append('RequestPriceLabel', carDetail.RequestPriceLabel);
-                formData.append('RegularPrice', carDetail.RegularPrice);
-                formData.append('SalePrice', carDetail.SalePrice);
-
-          
-         const response = await axios.post(`${baseUrl}/seller/listCar/${user?._id}`, formData);
-
+      const response = await axios.post(
+        `${baseUrl}/seller/listCar/${user?._id}`,
+        formData
+      );
 
       const data = await response?.data;
       if (data?.status) {
@@ -133,11 +136,11 @@ export default function AddCart() {
           RequestPriceLabel: "",
           RegularPrice: "",
           SalePrice: "",
-          photo1:"",
-          photo2:"",
-          photo3:"",
-          photo4:"",
-          photo5:"",
+          photo1: "",
+          photo2: "",
+          photo3: "",
+          photo4: "",
+          photo5: "",
         });
       } else {
         alert(data?.message);
@@ -152,6 +155,22 @@ export default function AddCart() {
         toast.error("Intenal server error ");
       }
     }
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+
+    setCarDetail((prevDetail) => {
+      let updatedFeatures;
+      if (checked) {
+        updatedFeatures = [...prevDetail.ListingFeatures, value];
+      } else {
+        updatedFeatures = prevDetail.ListingFeatures.filter(
+          (feature) => feature !== value
+        );
+      }
+      return { ...prevDetail, ListingFeatures: updatedFeatures };
+    });
   };
 
   useEffect(() => {
@@ -179,8 +198,11 @@ export default function AddCart() {
           {/* video */}
 
           <div className="tf-widget-add-cart">
+
             <div className="themesflat-container">
+
               <div className="tf-add-cart">
+
                 <form
                   onSubmit={submitHandler}
                   id="submit-add-cart"
@@ -717,21 +739,27 @@ export default function AddCart() {
                       </div>
                     </div>
                   </fieldset>
+
                   <fieldset id="amenities" className="mb-60">
+
                     <div className="inner-title mb-30">
                       <span className="sub-title">Add Your Car Today</span>
                       <h3 className="title">Select Listing Features</h3>
                     </div>
+
                     <div className="tfad-listing-feature">
+
                       <div className="listing-feature-item">
                         <div className="form-group">
                           <label>Request Price Label</label>
                           <div className="group-select">
                             <div className="radio">
                               <input
+                               id="front"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="A/C: Front"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="front">A/C: Front</label>
                             </div>
@@ -740,7 +768,8 @@ export default function AddCart() {
                                 id="rear"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="A/C: Rear"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="rear">A/C: Rear</label>
                             </div>
@@ -749,7 +778,8 @@ export default function AddCart() {
                                 id="camera"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Backup Camera"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="camera">Backup Camera</label>
                             </div>
@@ -758,7 +788,8 @@ export default function AddCart() {
                                 id="control"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Cruise Control"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="control">Cruise Control</label>
                             </div>
@@ -767,7 +798,8 @@ export default function AddCart() {
                                 id="navigation"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Navigation"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="navigation">Navigation</label>
                             </div>
@@ -776,23 +808,27 @@ export default function AddCart() {
                                 id="locks"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Power Locks"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="locks">Power Locks</label>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="listing-feature-item">
                         <div className="form-group">
                           <label>Entertainment</label>
+
                           <div className="group-select">
                             <div className="radio">
                               <input
                                 id="stereo"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="AM/FM Stereo"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="stereo">AM/FM Stereo</label>
                             </div>
@@ -801,7 +837,8 @@ export default function AddCart() {
                                 id="cd"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="CD Player"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="cd">CD Player</label>
                             </div>
@@ -810,7 +847,8 @@ export default function AddCart() {
                                 id="dvd"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="DVD System"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="dvd">DVD System</label>
                             </div>
@@ -819,7 +857,8 @@ export default function AddCart() {
                                 id="mp3"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="MP3 Player"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="mp3">MP3 Player</label>
                             </div>
@@ -828,7 +867,8 @@ export default function AddCart() {
                                 id="portable"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Portable Audio"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="portable">Portable Audio</label>
                             </div>
@@ -837,13 +877,15 @@ export default function AddCart() {
                                 id="premium"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Premium Audio"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="premium">Premium Audio</label>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="listing-feature-item">
                         <div className="form-group">
                           <label>Safety</label>
@@ -853,7 +895,8 @@ export default function AddCart() {
                                 id="driver"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Airbag: Driver"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="driver">Airbag: Driver</label>
                             </div>
@@ -862,7 +905,8 @@ export default function AddCart() {
                                 id="passenger"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Airbag: Passenger"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="passenger">
                                 Airbag: Passenger
@@ -873,7 +917,8 @@ export default function AddCart() {
                                 id="brakes"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Antilock Brakes"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="brakes">Antilock Brakes</label>
                             </div>
@@ -882,7 +927,8 @@ export default function AddCart() {
                                 id="bluetooth"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Bluetooth"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="bluetooth">Bluetooth</label>
                             </div>
@@ -891,7 +937,8 @@ export default function AddCart() {
                                 id="hands-free"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Hands-Free"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="hands-free">Hands-Free</label>
                             </div>
@@ -900,13 +947,15 @@ export default function AddCart() {
                                 id="fog-lights"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Fog Lights"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="fog-lights">Fog Lights</label>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="listing-feature-item">
                         <div className="form-group">
                           <label>Windows</label>
@@ -916,7 +965,8 @@ export default function AddCart() {
                                 id="power"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Power Windows"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="power">Power Windows</label>
                             </div>
@@ -925,7 +975,8 @@ export default function AddCart() {
                                 id="defroster"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Windows Defroster"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="defroster">
                                 Windows Defroster
@@ -936,7 +987,8 @@ export default function AddCart() {
                                 id="rear-window"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Rear Window"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="rear-window">Rear Window</label>
                             </div>
@@ -945,7 +997,8 @@ export default function AddCart() {
                                 id="wiper-tinted-glass"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Wiper Tinted Glass"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="wiper-tinted-glass">
                                 Wiper Tinted Glass
@@ -956,7 +1009,8 @@ export default function AddCart() {
                                 id="sunroof"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Sunroof"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="sunroof">Sunroof</label>
                             </div>
@@ -965,23 +1019,27 @@ export default function AddCart() {
                                 id="tow-package"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Tow Package"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="tow-package">Tow Package</label>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="listing-feature-item">
                         <div className="form-group">
                           <label>Seats</label>
                           <div className="group-select">
+
                             <div className="radio">
                               <input
                                 id="bucket-seats"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Bucket Seats"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="bucket-seats">Bucket Seats</label>
                             </div>
@@ -990,7 +1048,8 @@ export default function AddCart() {
                                 id="heated-seats"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Heated Seats"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="heated-seats">Heated Seats</label>
                             </div>
@@ -999,7 +1058,8 @@ export default function AddCart() {
                                 id="leather-interior"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Leather Interior"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="leather-interior">
                                 Leather Interior
@@ -1010,7 +1070,8 @@ export default function AddCart() {
                                 id="memory-seats"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Memory Seats"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="memory-seats">Memory Seats</label>
                             </div>
@@ -1019,7 +1080,8 @@ export default function AddCart() {
                                 id="power-seats"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Power Seats"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="power-seats">Power Seats</label>
                             </div>
@@ -1028,17 +1090,22 @@ export default function AddCart() {
                                 id="third-row-seats"
                                 type="checkbox"
                                 name="check"
-                                defaultValue="check"
+                                value="Third Row Seats"
+                                onChange={handleCheckboxChange}
                               />
                               <label htmlFor="third-row-seats">
                                 Third Row Seats
                               </label>
                             </div>
+
                           </div>
                         </div>
                       </div>
+
                     </div>
+
                   </fieldset>
+
                   <fieldset id="location" className="pd-bg mb-60">
                     <div className="inner-title mb-30">
                       <span className="sub-title">Add Your Car Today</span>
@@ -1080,6 +1147,7 @@ export default function AddCart() {
                       </div>
                     </div>
                   </fieldset>
+
                   <fieldset id="upload-media" className="pd-bg">
                     <div className="inner-title mb-30">
                       <span className="sub-title">Media</span>
@@ -1161,6 +1229,7 @@ export default function AddCart() {
                       *You must upload at least one photo
                     </p>
                   </fieldset>
+
                   <fieldset id="video" className="pd-bg">
                     <div className="inner-title mb-30">
                       <h3 className="title">Add Video</h3>
@@ -1176,6 +1245,7 @@ export default function AddCart() {
                       </div>
                     </div>
                   </fieldset>
+
                   <fieldset id="file-attachment" className="pd-bg">
                     <div className="inner-title mb-30">
                       <h3 className="title">Attachment / VIN Report</h3>
@@ -1193,13 +1263,17 @@ export default function AddCart() {
                       </label>
                     </div>
                   </fieldset>
+
                   <fieldset>
                     <button type="submit" className="button-save-listing">
                       Add Car
                     </button>
                   </fieldset>
+
                 </form>
+
               </div>
+
             </div>
           </div>
         </div>
