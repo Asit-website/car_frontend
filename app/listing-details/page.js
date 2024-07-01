@@ -36,16 +36,17 @@ const swiperOptions = {
         },
     },
 }
-export default function ListingDetails() {
+
+export default function ListingDetails({params}) {
+
     const [isToggled4, setToggled4] = useState(false)
     const handleToggle4 = () => setToggled4(!isToggled4)
     const [isToggled5, setToggled5] = useState(false)
     const handleToggle5 = () => setToggled5(!isToggled5)
 
     const location = usePathname();
-    console.log(location)
     const carDetails = location?.st;
-    console.log(carDetails);
+
     return (
         <>
 
