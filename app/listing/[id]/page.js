@@ -83,8 +83,6 @@ export default function ListingDetails({ params }) {
             const response = await axios.post(`${baseUrl}/seller/putBitAmount/${id}`, {BidAmount , userId:user?._id});
         
             const data =await response.data;
-
-            console.log("rposen ",data);
         
             if (data?.status) {
               alert("Successfully Bid Apply");
