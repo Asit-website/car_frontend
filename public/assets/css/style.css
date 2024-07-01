@@ -534,7 +534,7 @@ input[type=radio] + label:before {
 
 input[type=radio] {
   display: none !important;
-  *display: inline;
+  display: inline;
 }
 input[type=radio]:checked + label:after {
   content: "";
@@ -573,7 +573,7 @@ input[type=checkbox] + label:before {
 
 input[type=checkbox] {
   display: none !important;
-  *display: inline;
+  display: inline;
 }
 input[type=checkbox]:checked + label:after {
   content: "✔";
@@ -8191,6 +8191,7 @@ a.mapboxgl-ctrl-logo {
   border-radius: 100%;
   box-shadow: 0px 4px 21px 0px rgba(0, 0, 0, 0.07);
   margin-bottom: 26px;
+  height: 95px;
 }
 .sidebar-dashboard .db-profile .name {
   font-size: 18px;
