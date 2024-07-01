@@ -7,7 +7,7 @@ import 'swiper/css/thumbs'
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-export default function ThumbSlider() {
+export default function ThumbSlider({Photos}) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
     return (
@@ -22,41 +22,17 @@ export default function ThumbSlider() {
                         prevEl: ".swiper-button-prev",
                     }}
                     className="swiper-wrapper">
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="./assets/images/gallary/slide1.jpg" alt="Image" />
-                    </SwiperSlide>
+                        {
+                            Photos?.map((photo , index)=>(
+    <SwiperSlide key={index}> <img src={photo} alt="Image" />  </SwiperSlide>
+                    ))
+                }
+               
                 </Swiper>
                 <div className="swiper-button-next" />
                 <div className="swiper-button-prev" />
             </div >
-            <div className="swiper property-gallary">
+            {/* <div className="swiper property-gallary">
                 <Swiper
                     onSwiper={setThumbsSwiper}
                     spaceBetween={20}
@@ -107,7 +83,7 @@ export default function ThumbSlider() {
                         <img src="./assets/images/gallary/thum3.jpg" alt="Image" />
                     </SwiperSlide>
                 </Swiper>
-            </div>
+            </div> */}
         </>
     )
 }

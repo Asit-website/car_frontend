@@ -58,7 +58,6 @@ export default function MyProfile() {
     }));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   

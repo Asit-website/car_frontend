@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 const baseUrl = "http://localhost:4000";
 
 export default function AddCart() {
+  
   const [user, setUser] = useState(null);
 
   const [carDetail, setCarDetail] = useState({
@@ -104,10 +105,13 @@ export default function AddCart() {
       formData.append("SalePrice", carDetail.SalePrice);
       formData.append("ListingFeatures", carDetail.ListingFeatures);
 
+
+
       const response = await axios.post(
         `${baseUrl}/seller/listCar/${user?._id}`,
         formData
       );
+
 
       const data = await response?.data;
       if (data?.status) {
@@ -142,6 +146,8 @@ export default function AddCart() {
           photo4: "",
           photo5: "",
         });
+
+        console.log("dta" ,data);
       } else {
         alert(data?.message);
       }

@@ -9,6 +9,12 @@ import { useParams } from "next/navigation"
 import { useState,useEffect } from "react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
+import axios from 'axios';
+import toast from "react-hot-toast";
+
+
+const baseUrl = "http://localhost:4000";
+
 
 const swiperOptions = {
     modules: [Autoplay, Pagination, Navigation],
@@ -46,6 +52,8 @@ export default function ListingDetails({ params }) {
 
     const [data, setData] = useState({});
 
+    const [user, setUser] = useState(null);
+
     const { id } = useParams();
 
       const baseUrl = "http://localhost:4000";
@@ -67,16 +75,52 @@ export default function ListingDetails({ params }) {
         setData(ans.data[0]);
     };
 
+    const [BidAmount ,setBidAmount] = useState(0);
+
+    const submitBid = async()=>{
+        try {
+
+            const response = await axios.post(`${baseUrl}/seller/putBitAmount/${id}`, {BidAmount , userId:user?._id});
+        
+            const data =await response.data;
+
+            console.log("rposen ",data);
+        
+            if (data?.status) {
+              alert("Successfully Bid Apply");
+              setBidAmount(0);
+            } else {
+              toast.error(data?.message);
+            }
+          } catch (error) {
+            if (error.response) {
+              toast.error(error.response.data.message);
+            } else if (error.request) {
+              toast.error("Request error: No response received");
+            } else {
+              toast.error("Internal server error");
+            }
+          }
+    }
+
     useEffect(() => {
         getData();
     }, [id])
+
+    
+  useEffect(() => {
+    const car_user = JSON.parse(localStorage.getItem("Car_user"));
+    setUser(car_user);
+  }, []);
 
     return (
         <>
 
             <Layout headerStyle={1} footerStyle={1}>
                 <div>
+
                     <div className="widget-breakcrumb">
+
                         <div className="themesflat-container">
                             <div className="breakcrumb">
                                 <div className="title-breakcrumb">
@@ -85,14 +129,21 @@ export default function ListingDetails({ params }) {
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     {/* Breakcrumb */}
                     {/* property-detail */}
+
                     <div className="widget-property-detail">
+
                         <div className="themesflat-container">
+
                             <div className="row">
+
                                 <div className="col-lg-12">
+
                                     <div className="wrap-property-car flex">
+
                                         <div className="box-1">
                                             <div className="icon-box-info flex">
                                                 <div className="info-sale">
@@ -117,6 +168,7 @@ export default function ListingDetails({ params }) {
                                                 <p>Boston, MA, United States</p>
                                             </div>
                                         </div>
+
                                         <div className="box-2 t-al-right">
                                             <div className="icon-boxs flex">
                                                 <Link href="/#">
@@ -133,35 +185,29 @@ export default function ListingDetails({ params }) {
                                                 <p className="price">${data?.RegularPrice}</p>
                                             </div>
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
+
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="gallary-property-details">
-                                        <ThumbSlider />
+                                        <ThumbSlider Photos={data?.Photos} />
                                     </div>
                                 </div>
                             </div>
+
                             <div className="row">
                                 <div className="col-lg-8 col-md-12">
+
                                     <div className="post-property">
                                         <div className="wrap-description wrap-style">
                                             <h4 className="title">Description</h4>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but majority have
-                                                suffered teration in some form, by injected humour, or randomised words which
-                                                don't look even slight believable. If you are going to use a passa There
-                                                are many variations of passages of Lorem Ipsum available, but majority have
-                                                suffered teration in some form look even
-                                                by injected humour, or randomised There are many variations of passages of Lorem
-                                                Ipsum available, but majority
-                                                have suffered teration in some form, by injected humour, or randomised words
-                                                which don't look even slight believable.
-                                                If you are going to use a passa There are many variations of passages of Lorem
-                                                Ipsum available, but majority
-                                                have suffered teration in some form, by injected humour, or randomised many
-                                                variations of passages of Lorem Ipsum available, but majority There are many
-                                                variations of passages of </p>
+                                            <p>
+                                                {data?.Description} </p>
                                         </div>
                                         <div className="wrap-car-overview wrap-style">
                                             <h4 className="title">Car Overview</h4>
@@ -336,10 +382,19 @@ export default function ListingDetails({ params }) {
                                             </div>
                                         </div>
                                         <div className="wrap-car-feature wrap-style">
-                                            <h4 className="title">Features</h4>
+                                            <h4 className="title">Features </h4>
                                             <div className="tf-listing-info">
                                                 <div id="tf-features">
-                                                    <div className="features-item">
+                                                     <div className="features-item">
+
+                                                    {
+                                                        data?.ListingFeatures?.map((f , index)=>(
+                                                            
+                                                            <div key={index} className="listing-feature-wrap"><i className="icon-Vector-32" />{f}</div>
+                                                        ))
+                                                    }
+                                                    </div>
+                                                    {/* <div className="features-item">
                                                         <h5 className="features-type-title">Safety</h5>
                                                         <div className="listing-feature-wrap"><i className="icon-Vector-32" />A/C:
                                                             Front</div>
@@ -383,7 +438,7 @@ export default function ListingDetails({ params }) {
                                                             mirror</div>
                                                         <div className="listing-feature-wrap"><i className="icon-Vector-32" />Trunk
                                                             Light</div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -552,6 +607,7 @@ export default function ListingDetails({ params }) {
                                                         </p>
                                                         <div className="image-review d-flex">
                                                             <img src="./assets/images/page/rivew-custom.jpg" alt="" />
+                                                            {/* <img src={<img src={data?.Photos?.[0] ? data.Photos[0] : './assets/images/page/rivew-custom.jpg'} alt="" /> } alt="" /> */}
                                                             <img src="./assets/images/page/rivew-custom.jpg" alt="" />
                                                         </div>
                                                     </div>
@@ -663,6 +719,7 @@ export default function ListingDetails({ params }) {
                                             </form>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div className="col-lg-4 col-md-12">
                                     <div className="driver-price-wrap mb-40">
@@ -713,6 +770,8 @@ export default function ListingDetails({ params }) {
                             </div>
                         </div>
                     </div>
+
+
                     {/* property-detail */}
                     {/* related-single-listing */}
                     <div className="widget-related-single-listing">
@@ -1234,6 +1293,15 @@ export default function ListingDetails({ params }) {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div className="bidwarp"> 
+                 
+                  <h4>Bid You Amount</h4>
+
+                  <input type="number" required name="BidAmount" value={BidAmount}  onChange={(e)=>setBidAmount(e.target.value)} />
+                  <button onClick={()=>submitBid()}>Submit</button>
+
                 </div>
 
 
