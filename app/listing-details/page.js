@@ -5,6 +5,7 @@ import ModalTestDriver from "@/components/elements/ModalTestDriver"
 import Layout from "@/components/layout/Layout"
 import ThumbSlider from "@/components/slider/ThumbSlider"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -40,6 +41,11 @@ export default function ListingDetails() {
     const handleToggle4 = () => setToggled4(!isToggled4)
     const [isToggled5, setToggled5] = useState(false)
     const handleToggle5 = () => setToggled5(!isToggled5)
+
+    const location = usePathname();
+    console.log(location)
+    const carDetails = location?.st;
+    console.log(carDetails);
     return (
         <>
 
@@ -73,11 +79,11 @@ export default function ListingDetails() {
                                                 </div>
                                                 <div className="info flex">
                                                     <span>Model:</span>
-                                                    <span className="fw-4">XC60</span>
+                                                    <span className="fw-4">{carDetails?.Condition}</span>
                                                 </div>
                                                 <div className="info flex">
                                                     <span>Body:</span>
-                                                    <span className="fw-4">Sedan</span>
+                                                    <span className="fw-4">{carDetails?.FuelType}</span>
                                                 </div>
                                             </div>
                                             <div className="title-heading">Chevrolet Suburban 2021</div>

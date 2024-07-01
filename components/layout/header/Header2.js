@@ -23,7 +23,7 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                             <div className="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                                 <ul className="navigation clearfix">
                                                     <li className="dropdown2">
-                                                        <Link href="/#">Home</Link>
+                                                        <Link href="/">Home</Link>
                                                         {/* <ul>
                                                             <li>
                                                                 <Link href="/">Home Page 01</Link>
