@@ -8,7 +8,7 @@ export default function () {
         <>
             <ul className="navigation clearfix">
 
-                <li className="dropdown2">
+              
 
                 <li className="">
 
