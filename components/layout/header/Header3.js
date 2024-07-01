@@ -76,7 +76,7 @@ export default function Header3({  handleMobileMenu, handleToggle1, handleToggle
 
                                                         <Link href="/">Home</Link>
 
-                                                        <Link href="/#">Home</Link>
+                                                       
 
                                                         {/* <ul>
                                                             <li className="current">

@@ -362,6 +362,7 @@ export default function AddCart() {
                             value={carDetail?.Condition}
                             className="nice-select"
                           >
+                            <option>Select </option>
                             <option data-value className="option selected">
                               Used
                             </option>

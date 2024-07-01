@@ -8,9 +8,9 @@ export default function () {
         <>
             <ul className="navigation clearfix">
 
-                <li className="dropdown2">
+              
 
-                {/* <li className=""> */}
+                <li className="">
 
                     <Link href="/">Home</Link>
                     {/* <ul>
