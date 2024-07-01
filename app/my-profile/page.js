@@ -38,6 +38,7 @@ export default function MyProfile() {
     Location: "",
     Time: "",
     Description: "",
+    Hours:""
   });
 
   const changeHandler = async (e) => {
