@@ -93,7 +93,7 @@ export default function Header3({  handleMobileMenu, handleToggle1, handleToggle
                                                         <Link href="/#">Cars</Link>
                                                         <ul>
                                                             <li><Link href="/car-list">Car Listings</Link></li>
-                                                            <li><Link href="/listing-details">Listings Details</Link></li>
+                                                            {/* <li><Link href="/listing-details">Listings Details</Link></li> */}
                                                         </ul>
                                                     </li>
                                                     <li className="dropdown2">

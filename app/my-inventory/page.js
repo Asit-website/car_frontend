@@ -1,6 +1,45 @@
-
+"use client"
 import LayoutAdmin from "@/components/layout/LayoutAdmin"
+import { images } from "@/next.config";
+import { useState, useEffect } from "react";
+const baseUrl = "http://localhost:4000";
 export default function MyInventory() {
+
+
+
+
+       const [cars,setCars] = useState([]);
+
+    const [user, setUser] = useState(null);
+
+    console.log(user?._id);
+
+    const fetchCars = async () => {
+        try {
+            const response = await fetch(`${baseUrl}/seller/getMyCars/${user?._id}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+
+            setCars(data?.carDetails);
+
+        } catch (error) {
+            console.log('eerr', error);
+        }
+    }
+
+    useEffect(() => {
+        const car_user = JSON.parse(localStorage.getItem("Car_user"));
+        setUser(car_user);
+        fetchCars();
+    }, [])
+
 
     return (
         <>
@@ -9,6 +48,7 @@ export default function MyInventory() {
                 <div className="row">
                     <div className="col-md-6">
                         <h4 className="title-dashboard">My Inventory</h4>
+
                     </div>
                     <div className="col-md-6 sellec-list-db">
                         <div className="group-select">

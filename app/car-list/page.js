@@ -28,17 +28,17 @@ export default function CarList() {
 
     const getCars = async (id, query, page, perPage) => {
         const resp = await fetch(`${baseUrl}/seller/getAllCars?id=${id}&query=${query}&page=${page}&perPage=${perPage}`, {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-            'token': localStorage.getItem('Car_token')
-          }
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'token': localStorage.getItem('Car_token')
+            }
         });
         const data = await resp.json();
         return data;
-      };
+    };
 
-      const getData = async () => {
+    const getData = async () => {
         let ans = await getCars("", "", "", "");
         setAllCars(ans.data);
     }
@@ -92,7 +92,7 @@ export default function CarList() {
 
     useEffect(() => {
         getData();
-    },[])
+    }, [])
 
 
     return (
@@ -537,9 +537,9 @@ export default function CarList() {
                                                                                     <p className="price-sale">{car?.SalePrice}</p>
                                                                                 </div>
                                                                                 <div className="btn-read-more">
-                                                                                    <Link 
-                                                                                    href={`/listing/${car?._id}`}
-                                                                                    className="more-link">
+                                                                                    <Link
+                                                                                        href={`/listing/${car?._id}`}
+                                                                                        className="more-link">
                                                                                         <span>View details</span>
                                                                                         <i className="icon-arrow-right2" />
                                                                                     </Link>
@@ -574,7 +574,7 @@ export default function CarList() {
                                         <div className={activeIndex == 3 ? "tab-pane fade show active" : "tab-pane fade"}>
 
                                             <div className="listing-list-car-grid ">
-                                            {
+                                                {
                                                     allCars?.map((car, index) => {
 
                                                         return (
@@ -674,9 +674,9 @@ export default function CarList() {
                                                                                     <p className="price-sale">{car?.SalePrice}</p>
                                                                                 </div>
                                                                                 <div className="btn-read-more">
-                                                                                <Link 
-                                                                                    href={`/listing/${car?._id}`}
-                                                                                    className="more-link">
+                                                                                    <Link
+                                                                                        href={`/listing/${car?._id}`}
+                                                                                        className="more-link">
                                                                                         <span>View details</span>
                                                                                         <i className="icon-arrow-right2" />
                                                                                     </Link>

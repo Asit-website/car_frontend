@@ -8,7 +8,7 @@ export default function Footer1() {
                         <div className="col-lg-6 col-md-12 col-12 pd-r80 ">
                             <h2 className="title-footer-top">Do you Have <span className="red-title">something</span> to sell
                                 through us?</h2>
-                            {/* <img className="icon-ft" src="/assets/images/page/shape-footer.png" alt="" /> */}
+                            <img className="icon-ft" src="/assets/images/page/shape-footer.png" alt="" />
                         </div>
                         <div className="col-lg-6 col-md-12 col-12 t-al-right pt-20">
                             <Link href="/#" className="btn-sell">Sell your car today</Link>
@@ -110,8 +110,8 @@ export default function Footer1() {
                         </div>
                     </div>
                 </div>
-                <img src="/assets/images/page/ft-left.png" alt="left" className="shape-left" />
-                <img src="/assets/images/page/ft-right.png" alt="right" className="shape-right" />
+                {/* <img src="/assets/images/page/ft-left.png" alt="left" className="shape-left" />
+                <img src="/assets/images/page/ft-right.png" alt="right" className="shape-right" /> */}
             </footer>
 
         </>

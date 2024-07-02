@@ -555,7 +555,28 @@ input[type=radio]:checked + label:after {
   border-radius: 50%;
   background: #D01818;
 }
-
+.car_det{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+}
+.singleCar{
+  width: 100%;
+  margin: 10px;
+  height: 350px;
+  border: 1px solid #D01818;
+  border-radius: 10px;
+  padding: 10px;
+}
+.singleCar img{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.singleCar1{
+  height: 200px !important;
+}
 /* Custom checkbox */
 input[type=checkbox] + label {
   display: inline-block;

@@ -39,8 +39,8 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                                         <Link href="/#">Cars</Link>
                                                         <ul>
                                                             <li><Link href="/car-list">Car Listings</Link></li>
-                                                            <li><Link href="/listing-details">Listings Details</Link>
-                                                            </li>
+                                                            {/* <li><Link href="/listing-details">Listings Details</Link>
+                                                            </li> */}
                                                         </ul>
                                                     </li>
                                                     <li className="dropdown2 current">

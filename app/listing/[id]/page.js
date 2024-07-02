@@ -6,7 +6,7 @@ import Layout from "@/components/layout/Layout"
 import ThumbSlider from "@/components/slider/ThumbSlider"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { useState,useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import axios from 'axios';
@@ -56,7 +56,7 @@ export default function ListingDetails({ params }) {
 
     const { id } = useParams();
 
-      const baseUrl = "http://localhost:4000";
+    const baseUrl = "http://localhost:4000";
 
     const getCars = async (id, query, page, perPage) => {
         const resp = await fetch(`${baseUrl}/seller/getAllCars?id=${id}&query=${query}&page=${page}&perPage=${perPage}`, {
@@ -75,41 +75,41 @@ export default function ListingDetails({ params }) {
         setData(ans.data[0]);
     };
 
-    const [BidAmount ,setBidAmount] = useState(0);
+    const [BidAmount, setBidAmount] = useState(0);
 
-    const submitBid = async()=>{
+    const submitBid = async () => {
         try {
 
-            const response = await axios.post(`${baseUrl}/seller/putBitAmount/${id}`, {BidAmount , userId:user?._id});
-        
-            const data =await response.data;
-        
+            const response = await axios.post(`${baseUrl}/seller/putBitAmount/${id}`, { BidAmount, userId: user?._id });
+
+            const data = await response.data;
+
             if (data?.status) {
-              alert("Successfully Bid Apply");
-              setBidAmount(0);
+                alert("Successfully Bid Apply");
+                setBidAmount(0);
             } else {
-              toast.error(data?.message);
+                toast.error(data?.message);
             }
-          } catch (error) {
+        } catch (error) {
             if (error.response) {
-              toast.error(error.response.data.message);
+                toast.error(error.response.data.message);
             } else if (error.request) {
-              toast.error("Request error: No response received");
+                toast.error("Request error: No response received");
             } else {
-              toast.error("Internal server error");
+                toast.error("Internal server error");
             }
-          }
+        }
     }
 
     useEffect(() => {
         getData();
     }, [id])
 
-    
-  useEffect(() => {
-    const car_user = JSON.parse(localStorage.getItem("Car_user"));
-    setUser(car_user);
-  }, []);
+
+    useEffect(() => {
+        const car_user = JSON.parse(localStorage.getItem("Car_user"));
+        setUser(car_user);
+    }, []);
 
     return (
         <>
@@ -218,7 +218,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Condition:</span>
-                                                                <p className="listing-info-value">New</p>
+                                                                <p className="listing-info-value">{data?.Condition}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -229,7 +229,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Cylinders: </span>
-                                                                <p className="listing-info-value">6</p>
+                                                                <p className="listing-info-value">{data?.Cylinders}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -240,7 +240,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Stock Number:</span>
-                                                                <p className="listing-info-value">N8990</p>
+                                                                <p className="listing-info-value">{data?.StockNumber}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -251,7 +251,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Fuel Type:</span>
-                                                                <p className="listing-info-value">Petrol</p>
+                                                                <p className="listing-info-value">{data?.FuelType}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -262,7 +262,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">VIN Number:</span>
-                                                                <p className="listing-info-value">84HKFI792KJDC</p>
+                                                                <p className="listing-info-value">{data?.VINNumber}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -273,7 +273,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Doors:</span>
-                                                                <p className="listing-info-value">4</p>
+                                                                <p className="listing-info-value">{data?.Doors}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -284,7 +284,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Year:</span>
-                                                                <p className="listing-info-value">2023</p>
+                                                                <p className="listing-info-value">{new Date(data?.createdAt).toLocaleDateString()}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -295,7 +295,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Color:</span>
-                                                                <p className="listing-info-value">Black</p>
+                                                                <p className="listing-info-value">{data?.Color}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -306,7 +306,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Mileage: </span>
-                                                                <p className="listing-info-value">28,000 miles</p>
+                                                                <p className="listing-info-value">{data?.Mileage}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -317,7 +317,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Seats:</span>
-                                                                <p className="listing-info-value">5</p>
+                                                                <p className="listing-info-value">{data?.Seats}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -328,7 +328,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Transmission :</span>
-                                                                <p className="listing-info-value">Automatic</p>
+                                                                <p className="listing-info-value">{data?.Transmission}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -339,7 +339,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">City MPG:</span>
-                                                                <p className="listing-info-value">18</p>
+                                                                <p className="listing-info-value">{data?.CityMPG}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -350,7 +350,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Engine Size:</span>
-                                                                <p className="listing-info-value">4.8L</p>
+                                                                <p className="listing-info-value">{data?.EngineSize}L</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -361,7 +361,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Highway MPG:</span>
-                                                                <p className="listing-info-value">28</p>
+                                                                <p className="listing-info-value">{data?.HighwayMPG}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -372,7 +372,7 @@ export default function ListingDetails({ params }) {
                                                             </div>
                                                             <div className="content-listing-info">
                                                                 <span className="listing-info-title">Driver type: </span>
-                                                                <p className="listing-info-value">2WD</p>
+                                                                <p className="listing-info-value">{data?.DriverType}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -383,14 +383,14 @@ export default function ListingDetails({ params }) {
                                             <h4 className="title">Features </h4>
                                             <div className="tf-listing-info">
                                                 <div id="tf-features">
-                                                     <div className="features-item">
+                                                    <div className="features-item">
 
-                                                    {
-                                                        data?.ListingFeatures?.map((f , index)=>(
-                                                            
-                                                            <div key={index} className="listing-feature-wrap"><i className="icon-Vector-32" />{f}</div>
-                                                        ))
-                                                    }
+                                                        {
+                                                            data?.ListingFeatures?.map((f, index) => (
+
+                                                                <div key={index} className="listing-feature-wrap"><i className="icon-Vector-32" />{f}</div>
+                                                            ))
+                                                        }
                                                     </div>
                                                     {/* <div className="features-item">
                                                         <h5 className="features-type-title">Safety</h5>
@@ -1293,12 +1293,12 @@ export default function ListingDetails({ params }) {
                     </div>
                 </div>
 
-                <div className="bidwarp"> 
-                 
-                  <h4>Bid You Amount</h4>
+                <div className="bidwarp">
 
-                  <input type="number" required name="BidAmount" value={BidAmount}  onChange={(e)=>setBidAmount(e.target.value)} />
-                  <button onClick={()=>submitBid()}>Submit</button>
+                    <h4>Bid You Amount</h4>
+
+                    <input type="number" required name="BidAmount" value={BidAmount} onChange={(e) => setBidAmount(e.target.value)} />
+                    <button onClick={() => submitBid()}>Submit</button>
 
                 </div>
 

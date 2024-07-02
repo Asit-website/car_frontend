@@ -29,7 +29,7 @@ export default function () {
                     <Link href="/#">Cars</Link>
                     <ul>
                         <li className={pathname == "/car-list" ? "current" : ""}><Link href="/car-list">Car Listings</Link></li>
-                        <li className={pathname == "/listing-details" ? "current" : ""}><Link href="/listing-details">Listings Details</Link></li>
+                        {/* <li className={pathname == "/listing-details" ? "current" : ""}><Link href="/listing-details">Listings Details</Link></li> */}
                     </ul>
                 </li>
                 <li className="dropdown2">

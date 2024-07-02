@@ -34,7 +34,7 @@ export default function Error() {
                                                 </div>
                                                 <div className="dealer-content-info-box">
                                                     <p className="label-dealer-content">Sales Phone</p>
-                                                    <span className="dealer-title">302 456 9854 </span>
+                                                    <span className="dealer-title">{user?.Phone}</span>
                                                 </div>
                                             </div>
                                             <div className="dealer-author-item">
@@ -43,7 +43,7 @@ export default function Error() {
                                                 </div>
                                                 <div className="dealer-content-info-box">
                                                     <p className="label-dealer-content">location</p>
-                                                    <span className="dealer-title">391 Elgin St. Celina, 10299</span>
+                                                    <span className="dealer-title">{user?.Location}</span>
                                                 </div>
                                             </div>
                                             <div className="dealer-author-item">
@@ -53,7 +53,7 @@ export default function Error() {
                                                 <div className="dealer-content-info-box">
                                                     <p className="label-dealer-content">Dealer Email</p>
                                                     <Link className="dealer-title" href="/mailto:contact@motorx.com">
-                                                        contact@motorx.com</Link>
+                                                        {user?.Email}</Link>
                                                 </div>
                                             </div>
                                             <div className="dealer-author-item">
@@ -73,19 +73,14 @@ export default function Error() {
                                 <div className="col-xl-9 col-md-12">
                                     <div className="dealer-description mb-60">
                                         <h3 className="dealer-title mb-25">Introduction</h3>
-                                        <p>There are many variations of passages of Lorem Ipsum available, but majority have
-                                            suffered teration in some form, by injected humour, or randomised
-                                            words which don't look even slight believable. If you are going to use a passa
-                                            In publishing and vfx graphic design, Lorem ipsum is a placeholder text commonly
-                                            used to demonstrate the visual fo
-                                            of a document or a typeface without relying on meaningful content. Lorem ipsum
-                                            may be used as a placeholder before final copy is available.
+                                        <p>
+                                            {user?.Description}
                                         </p>
                                     </div>
                                     <div className="dealer-inventory listing-list-car-wrap">
                                         <form action="/" className="tf-my-listing-search">
                                             <div className="tab-listing-all">
-                                                <h3 className="title">Dealer Inventory</h3>
+                                                <h3 className="title">{user?.AccountType === "Seller" ? "Seller" : user?.AccountType === "Broker" ? "Broker" : "Admin"} Inventory</h3>
                                                 <div className="toolbar-list">
                                                     <div className="group-select-recently">
                                                         <select className="nice-select">
